@@ -43,8 +43,8 @@ const Dashboard = (): JSX.Element => {
 
   async function handleUpdateFood(food: FoodType){
     try {
-      const foodUpdated = await api.put(
-        `/foods/${editingFood.id}`,
+      const foodUpdated = await api.put<FoodType>(
+        `/foods/${food.id}`,
         { ...editingFood, ...food },
       );
 
@@ -52,7 +52,7 @@ const Dashboard = (): JSX.Element => {
         f.id !== foodUpdated.data.id ? f : foodUpdated.data,
       );
 
-      this.setState({ foods: foodsUpdated });
+      setFoods(foodsUpdated)
     } catch (err) {
       console.log(err);
     }
@@ -94,7 +94,7 @@ const Dashboard = (): JSX.Element => {
         isOpen={editModalOpen}
         setIsOpen={toggleEditModal}
         editingFood={editingFood}
-        //handleUpdateFood={handleUpdateFood}
+        handleUpdateFood={handleUpdateFood}
       />
 
       <FoodsContainer data-testid="foods-list">
