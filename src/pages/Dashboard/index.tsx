@@ -25,6 +25,10 @@ const Dashboard = (): JSX.Element => {
 
     loadFoods();
   }, []) 
+
+  useEffect(()=>{
+
+  }, [editingFood])
       
 
  async function handleAddFood (food: FoodType){
@@ -41,11 +45,11 @@ const Dashboard = (): JSX.Element => {
     }
   }
 
-  async function handleUpdateFood(food: FoodType){
+  async function handleUpdateFood(editingFood: FoodType){
     try {
       const foodUpdated = await api.put<FoodType>(
-        `/foods/${food.id}`,
-        { ...editingFood, ...food },
+        `/foods/${editingFood.id}`,
+        { ...editingFood },
       );
 
       const foodsUpdated = foods.map(f =>
@@ -77,7 +81,7 @@ const Dashboard = (): JSX.Element => {
     setEditModalOpen(!editModalOpen)
   }
 
-  function handleEditFood(food: FoodType) {
+   function handleEditFood(food: FoodType) {
      setEditingFood(food);
      setEditModalOpen(true);
   }
@@ -103,8 +107,8 @@ const Dashboard = (): JSX.Element => {
             <Food
               key={food.id}
               food={food}
-              handleDelete={handleDeleteFood}
               handleEditFood={handleEditFood}
+              handleDelete={handleDeleteFood}
             />
           ))}
       </FoodsContainer>
