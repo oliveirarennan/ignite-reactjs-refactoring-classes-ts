@@ -37,7 +37,7 @@ const ModalEditFood = ({ isOpen, setIsOpen, handleUpdateFood, editingFood }: Mod
         <Input name="description" placeholder="Descrição" />
 
         <button type="submit" data-testid="edit-food-button">
-          <div className="text">Editar Prato</div>
+          <div className="text">Editar Prato </div>
           <div className="icon">
             <FiCheckSquare size={24} />
           </div>

@@ -6,7 +6,7 @@ import Food from '../../components/Food';
 import ModalAddFood from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
-import { FoodType } from "../../types/Food";
+import { FoodType, AddFoodType } from "../../types/Food";
 
 
 const Dashboard = (): JSX.Element => {
@@ -26,12 +26,7 @@ const Dashboard = (): JSX.Element => {
     loadFoods();
   }, []) 
 
-  useEffect(()=>{
-
-  }, [editingFood])
-      
-
- async function handleAddFood (food: FoodType){
+ async function handleAddFood (food: AddFoodType){
 
     try {
       const response = await api.post<FoodType>('/foods', {
@@ -49,7 +44,7 @@ const Dashboard = (): JSX.Element => {
     try {
       const foodUpdated = await api.put<FoodType>(
         `/foods/${editingFood.id}`,
-        { ...editingFood },
+        {...foods, ...editingFood },
       );
 
       const foodsUpdated = foods.map(f =>
@@ -97,6 +92,7 @@ const Dashboard = (): JSX.Element => {
       <ModalEditFood
         isOpen={editModalOpen}
         setIsOpen={toggleEditModal}
+        //@ts-ignore
         editingFood={editingFood}
         handleUpdateFood={handleUpdateFood}
       />
