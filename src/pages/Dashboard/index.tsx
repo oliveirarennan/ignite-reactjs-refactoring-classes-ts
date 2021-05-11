@@ -40,11 +40,14 @@ const Dashboard = (): JSX.Element => {
     }
   }
 
-  async function handleUpdateFood(editingFood: FoodType){
+  async function handleUpdateFood(food: FoodType){
     try {
+      if(!editingFood){
+        return
+      }
       const foodUpdated = await api.put<FoodType>(
         `/foods/${editingFood.id}`,
-        {...foods, ...editingFood },
+        {...editingFood, ...food },
       );
 
       const foodsUpdated = foods.map(f =>
@@ -92,8 +95,7 @@ const Dashboard = (): JSX.Element => {
       <ModalEditFood
         isOpen={editModalOpen}
         setIsOpen={toggleEditModal}
-        //@ts-ignore
-        editingFood={editingFood}
+        editingFood={editingFood as FoodType}
         handleUpdateFood={handleUpdateFood}
       />
 
